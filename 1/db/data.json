@@ -1,5 +1,5 @@
 {
-  "lastId": 11,
+  "lastId": 13,
   "data": [
     {
       "id": 1,
@@ -66,6 +66,18 @@
       "normalizedEmail": "testuser4@testify.com",
       "password": "$argon2id$v=19$m=65536,t=3,p=1$vTuVfCK7eLr39S1ogaoOgA$bqUFUMB2ut70/0nPePmmeN9k/1b+8GBp5/gH8z2Zcmg",
       "createdAt": "2026-04-07T11:06:03.639Z"
+    },
+    {
+      "id": 12,
+      "normalizedEmail": "tejstuser4@testify.com",
+      "password": "$argon2id$v=19$m=65536,t=3,p=1$Wg3gj2yo/RXDQDR/4rLgtw$OrCno97ZcOGsgR5XEDUMYMzRcitdkXBoU8EuQKysU7w",
+      "createdAt": "2026-04-07T11:53:00.952Z"
+    },
+    {
+      "id": 13,
+      "normalizedEmail": "tejstusehr4@testify.com",
+      "password": "$argon2id$v=19$m=65536,t=3,p=1$H7KUFbOWAL5k9T4UAJMlnQ$0rqEgDaAsGX98MQLbqLT6YsHSnI+hNyaAxAuLDMjNEc",
+      "createdAt": "2026-04-07T12:09:57.064Z"
     }
   ]
 }
