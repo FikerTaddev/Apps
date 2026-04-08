@@ -59,3 +59,16 @@ authService.RegisterUser = async (email, password) => {
     const token = GenerateToken({ id: existingUser[0].id, email: existingUser[0].normalizedEmail })
     return { ok: true, data: token }
 }
+
+authService.Profile = async(req,res)=>{
+ let id = req.auth.id
+ let email = req.auth.email
+  
+ const User = db.findById(id)
+ if (User) {
+    return {
+        "id":id,
+        "email":email
+    }
+ }
+}

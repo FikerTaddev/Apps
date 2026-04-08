@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { SignIn, SignUp } from "../controller/authController.js";
+import { SignIn, SignUp , Profile} from "../controller/authController.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
  const authRoutes = Router()
+ const protectedRoutes = Router()
 
 authRoutes.get("/signin", SignIn)
 authRoutes.post("/signup", SignUp)
-
-export default authRoutes
+protectedRoutes.get("/profile", authMiddleware, Profile )
+export { authRoutes , protectedRoutes}

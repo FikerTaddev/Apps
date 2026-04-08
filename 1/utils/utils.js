@@ -23,7 +23,9 @@ export const VerifyHash = async (pwd, hash) => {
 
 export const GenerateToken = (payload) => {
 
-    const token = jwt.sign(payload, env.JWT_SECRET)
+    const token = jwt.sign(payload, env.JWT_SECRET,{
+        expiresIn: '1h'
+    })
 
     return token
 }

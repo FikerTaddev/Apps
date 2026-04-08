@@ -1,5 +1,5 @@
 {
-  "lastId": 13,
+  "lastId": 14,
   "data": [
     {
       "id": 1,
@@ -78,6 +78,12 @@
       "normalizedEmail": "tejstusehr4@testify.com",
       "password": "$argon2id$v=19$m=65536,t=3,p=1$H7KUFbOWAL5k9T4UAJMlnQ$0rqEgDaAsGX98MQLbqLT6YsHSnI+hNyaAxAuLDMjNEc",
       "createdAt": "2026-04-07T12:09:57.064Z"
+    },
+    {
+      "id": 14,
+      "normalizedEmail": "test45@8j.b",
+      "password": "$argon2id$v=19$m=65536,t=3,p=1$OrOjvbqCOD3/asARAc9jbg$OYSZLR72+eQ1IRqamXAg6f39J0QD3U+OLcXpSH6ycog",
+      "createdAt": "2026-04-08T06:42:06.925Z"
     }
   ]
 }

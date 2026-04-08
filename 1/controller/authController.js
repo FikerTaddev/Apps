@@ -1,13 +1,4 @@
-// {}
-
-import { 
-    InvalidCredentialError , 
-    MissingFieldError ,
-    InvalidEmailFormatError,
-    UserAlreadyExistsError
-} from '../error/app.js';
 import {authService} from '../service/authService.js';
-
 
 export const SignUp = async (req, res,next) => {
     try {
@@ -31,6 +22,13 @@ export const SignIn = async (req, res,next) => {
     res.status(200).json({token})
    } catch (err) {
    next(err)
-   }
-   
+   } 
+}
+export const Profile = async (req, res,next) => {
+    try {
+        const userData = await authService.Profile(req, res)
+        res.status(200).json({userData})
+    } catch (e) {
+        next(e)
+    }
 }
