@@ -2,6 +2,7 @@ import express from "express";
 import {authRoutes ,protectedRoutes} from "./routes/authRoutes.js"
 import { errorHandler } from "./middleware/errorHandler.js";
 import {env}from "./config/env.js"
+import { pool } from "./config/db.js";
 let app = express()
 
 

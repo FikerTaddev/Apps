@@ -1,4 +1,5 @@
 import { JsonDB } from "../db/Jsondb.js"
+import { CreateUser, FindUserByEmail, FindUserById } from "../repo/user.repo.js";
 import {
     InvalidCredentialError,
     InvalidEmailFormatError,
@@ -18,7 +19,7 @@ authService.RegisterUser = async (email, password) => {
     //normalize email
     const normalizedEmail = email.toLowerCase().trim();
     // check if existing
-    const existingUser = db.findBy((user) => user.normalizedEmail === normalizedEmail)
+    const existingUser = FindUserByEmail(normalizedEmail)
     if (existingUser.length > 0) {
         throw new UserAlreadyExistsError
     }
@@ -31,7 +32,7 @@ authService.RegisterUser = async (email, password) => {
     // hash the password
     const HashedPasword = await HashPwd(password)
     // create user in the db 
-    const _NewUser = db.insert({ normalizedEmail, password: HashedPasword })
+    const _NewUser = CreateUser(normalizedEmail,HashedPasword)
 
     // create a token and return that to client 
     const token = GenerateToken({ id: _NewUser.id, email: _NewUser.normalizedEmail })
@@ -46,17 +47,17 @@ authService.RegisterUser = async (email, password) => {
     //normalize email
     const normalizedEmail = email.toLowerCase().trim();
     // check if user exists
-    const existingUser = db.findBy((user) => user.normalizedEmail === normalizedEmail)
+    const existingUser = FindUserByEmail(normalizedEmail)
     if (existingUser.length === 0) {
         throw new UserDoesnotExistError
     }
     // verify password
-    const isMatch = await VerifyHash(password, existingUser[0].password)
+    const isMatch = await VerifyHash(password, existingUser.password)
     if (!isMatch) {
         throw new InvalidCredentialError
     }
     // create a token and return that to client 
-    const token = GenerateToken({ id: existingUser[0].id, email: existingUser[0].normalizedEmail })
+    const token = GenerateToken({ id: existingUser.id, email: existingUser.normalizedEmail })
     return { ok: true, data: token }
 }
 
@@ -64,7 +65,7 @@ authService.Profile = async(req,res)=>{
  let id = req.auth.id
  let email = req.auth.email
   
- const User = db.findById(id)
+ const User = FindUserById(id)
  if (User) {
     return {
         "id":id,
