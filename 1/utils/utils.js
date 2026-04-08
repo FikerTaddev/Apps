@@ -1,8 +1,6 @@
 import argon2, { argon2id } from "argon2"
 import jwt from "jsonwebtoken"
-
-
-const secretKey = "Jjgcg783gf7g8g873gf7gf7ggff@+/4"
+import { env } from "../config/env.js"
 
 export const HashPwd = async (pwd) => {
 
@@ -25,14 +23,14 @@ export const VerifyHash = async (pwd, hash) => {
 
 export const GenerateToken = (payload) => {
 
-    const token = jwt.sign(payload, secretKey)
+    const token = jwt.sign(payload, env.JWT_SECRET)
 
     return token
 }
 
 export const VerifyToken = (token) => {
     try {
-        const decoded = jwt.verify(token, secretKey)
+        const decoded = jwt.verify(token, env.JWT_SECRET)
         return decoded
     } catch (err) {
         console.log(err)

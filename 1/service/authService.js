@@ -1,19 +1,19 @@
 import { JsonDB } from "../db/Jsondb.js"
 import {
-     InvalidCredentialError,
-     InvalidEmailFormatError, 
-     MissingFieldError, 
-     UserAlreadyExistsError,
-     UserDoesnotExistError
-    } from "../error/app.js";
+    InvalidCredentialError,
+    InvalidEmailFormatError,
+    MissingFieldError,
+    UserAlreadyExistsError,
+    UserDoesnotExistError
+} from "../error/app.js";
 import { VerifyHash, VerifyToken, HashPwd, GenerateToken, ValidateEmail } from "../utils/utils.js"
 
 const db = new JsonDB("./db/data.json")
-
-export const RegisterUser = async (email, password) => {
+export const authService = {}
+authService.RegisterUser = async (email, password) => {
     //check if email and password are provided
     if (!email || !password) {
-      throw new MissingFieldError
+        throw new MissingFieldError
     }
     //normalize email
     const normalizedEmail = email.toLowerCase().trim();
@@ -25,7 +25,7 @@ export const RegisterUser = async (email, password) => {
     // validate email format
     const isValid = ValidateEmail(normalizedEmail)
     if (!isValid) {
-      throw new InvalidEmailFormatError
+        throw new InvalidEmailFormatError
     }
 
     // hash the password
@@ -38,17 +38,17 @@ export const RegisterUser = async (email, password) => {
     return { ok: true, data: token };
 }
 
-export const LoginUser = async (email, password) => {
+    authService.LoginUser = async (email, password) => {
     //check if email and password are provided
     if (!email || !password) {
-      throw new MissingFieldError
+        throw new MissingFieldError
     }
     //normalize email
     const normalizedEmail = email.toLowerCase().trim();
     // check if user exists
     const existingUser = db.findBy((user) => user.normalizedEmail === normalizedEmail)
     if (existingUser.length === 0) {
-      throw new UserDoesnotExistError
+        throw new UserDoesnotExistError
     }
     // verify password
     const isMatch = await VerifyHash(password, existingUser[0].password)

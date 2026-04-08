@@ -1,6 +1,7 @@
 import express from "express";
 import authRoutes from "./routes/authRoutes.js"
 import { errorHandler } from "./middleware/errorHandler.js";
+import {env}from "./config/env.js"
 let app = express()
 
 
@@ -11,6 +12,6 @@ app.use(express.json())
 app.use("/api",authRoutes)
 //error middleware
 app.use(errorHandler)
-app.listen(3900,()=>{
-    console.log("Server is running on port 3900")
+app.listen(env.PORT,()=>{
+    console.log(`Server is running on port ${env.PORT}`)
 })
