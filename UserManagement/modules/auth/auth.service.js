@@ -1,13 +1,16 @@
 
-import { CreateUser, FindUserByEmail, FindUserById } from "../repo/user.repo.js";
+import { CreateUser, FindUserByEmail, FindUserById } from "./user.repo.js";
 import {
     InvalidCredentialError,
     InvalidEmailFormatError,
     MissingFieldError,
     UserAlreadyExistsError,
     UserDoesnotExistError
-} from "../error/app.js";
-import { VerifyHash, HashPwd, GenerateToken, ValidateEmail, wrapDbOp } from "../utils/utils.js"
+} from "../../error/app.js";
+import {  ValidateEmail} from "../../utils/utils.js"
+import { VerifyHash , HashPwd } from "../../infra/hash.js";
+import { GenerateToken } from "../../infra/jwt.js";
+import { wrapDbOp } from "../../infra/wrapper.js";
 
 
 export const authService = {}

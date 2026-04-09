@@ -1,6 +1,6 @@
 import express from "express";
-import { authRoutes, protectedRoutes } from "./routes/authRoutes.js"
-import { errorHandler  } from "./middleware/errorHandler.js";
+import { authRoutes, protectedRoutes } from "./modules/auth/auth.route.js"
+import { errorHandler  } from "./middleware/error.handle.js";
 import { env } from "./config/env.js"
 
 let app = express()
@@ -18,6 +18,3 @@ app.use(errorHandler)
 
 
 //listener
-app.listen(env.PORT, () => {
-    console.log(`Server is running on port ${env.PORT}`)
-})
