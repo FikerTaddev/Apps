@@ -1,4 +1,4 @@
-import { JsonDB } from "../db/Jsondb.js"
+
 import { CreateUser, FindUserByEmail, FindUserById } from "../repo/user.repo.js";
 import {
     InvalidCredentialError,
@@ -7,9 +7,9 @@ import {
     UserAlreadyExistsError,
     UserDoesnotExistError
 } from "../error/app.js";
-import { VerifyHash, VerifyToken, HashPwd, GenerateToken, ValidateEmail } from "../utils/utils.js"
+import { VerifyHash, HashPwd, GenerateToken, ValidateEmail, wrapDbOp } from "../utils/utils.js"
 
-const db = new JsonDB("./db/data.json")
+
 export const authService = {}
 authService.RegisterUser = async (email, password) => {
     //check if email and password are provided
@@ -19,8 +19,8 @@ authService.RegisterUser = async (email, password) => {
     //normalize email
     const normalizedEmail = email.toLowerCase().trim();
     // check if existing
-    const existingUser = FindUserByEmail(normalizedEmail)
-    if (existingUser.length > 0) {
+    const existingUser = await FindUserByEmail(normalizedEmail)
+    if (existingUser) {
         throw new UserAlreadyExistsError
     }
     // validate email format
@@ -32,7 +32,7 @@ authService.RegisterUser = async (email, password) => {
     // hash the password
     const HashedPasword = await HashPwd(password)
     // create user in the db 
-    const _NewUser = CreateUser(normalizedEmail,HashedPasword)
+    const _NewUser = await wrapDbOp(() => CreateUser(normalizedEmail, HashedPasword))
 
     // create a token and return that to client 
     const token = GenerateToken({ id: _NewUser.id, email: _NewUser.normalizedEmail })
@@ -48,7 +48,7 @@ authService.RegisterUser = async (email, password) => {
     const normalizedEmail = email.toLowerCase().trim();
     // check if user exists
     const existingUser = FindUserByEmail(normalizedEmail)
-    if (existingUser.length === 0) {
+    if (!existingUser) {
         throw new UserDoesnotExistError
     }
     // verify password

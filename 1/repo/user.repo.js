@@ -1,5 +1,7 @@
 import { pool } from "../config/db.js"
+
 export const CreateUser = async (email, password) => {
+    
     const res = await pool.query(`
             INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *
         `, [email, password])
@@ -10,7 +12,7 @@ export const FindUserByEmail = async (email) => {
     const res = await pool.query(`
         SELECT * FROM users WHERE email = $1
         `,[email])
-        return res.rows[0]
+        return true ? res.rows[0] : false
 }
 
 export const FindUserById = async (id)=>{

@@ -1,5 +1,6 @@
 import argon2, { argon2id } from "argon2"
 import jwt from "jsonwebtoken"
+import { UserAlreadyExistsError, MissingFieldError } from '../error/app.js';
 import { env } from "../config/env.js"
 
 export const HashPwd = async (pwd) => {
@@ -49,3 +50,18 @@ export const ValidateEmail = (email) => {
     return true
 
 }
+
+
+
+export const wrapDbOp = async (operation) => {
+  try {
+    return await operation();
+  } catch (err) {
+    // Handle specific PG codes
+    if (err.code === '23505') {
+      throw new UserAlreadyExistsError();
+    } 
+    throw err; 
+  }
+};
+
