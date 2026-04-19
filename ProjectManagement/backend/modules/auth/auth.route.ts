@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { SignIn, SignUp , Profile} from "./auth.controller.js";
+import { SignIn, SignUp} from "./auth.controller.js";
 
 
- const authRoutes = Router()
+ const authRoutes :any = Router()
 
 
 authRoutes.get("/signin", SignIn)

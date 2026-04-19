@@ -7,7 +7,7 @@ const payload = {
   password: "123456"
 };
 
-async function sendRequest(i) {
+async function sendRequest(i:any) {
   try {
     const res = await fetch(url, {
       method: "POST",
@@ -17,7 +17,7 @@ async function sendRequest(i) {
 
     const data = await res.json();
     console.log(i, res.status, data);
-  } catch (err) {
+  } catch (err:any) {
     console.log(i, "error", err.message);
   }
 }

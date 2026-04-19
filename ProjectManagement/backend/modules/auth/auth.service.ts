@@ -1,7 +1,6 @@
 import {
   CreateUser,
   FindUserByEmail,
-  FindUserById,
 } from "../user/user.repo.js";
 import {
   InvalidCredentialError,
@@ -14,9 +13,13 @@ import { ValidateEmail } from "../../utils/utils.js";
 import { VerifyHash, HashPwd } from "../../infra/hash.js";
 import { GenerateToken } from "../../infra/jwt.js";
 import { wrapDbOp } from "../../infra/wrapper.js";
+import { role } from "../../types/role.js";
 
-export const authService = {};
-authService.RegisterUser = async (email, password, role) => {
+export const RegisterUser = async (
+  email: string,
+  password: string,
+  role: role = "viewer",
+) => {
   //check if email and password are provided
   if (!email || !password) {
     throw new MissingFieldError();
@@ -49,7 +52,7 @@ authService.RegisterUser = async (email, password, role) => {
   return { ok: true, data: token };
 };
 
-authService.LoginUser = async (email, password) => {
+export const LoginUser = async (email: string, password: string) => {
   //check if email and password are provided
   if (!email || !password) {
     throw new MissingFieldError();

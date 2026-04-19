@@ -1,9 +1,8 @@
-import { FindUserById, FindUsersCreationDate } from "./user.repo.js";
+import { Request } from "express-jwt";
+import { FindUserById } from "./user.repo.js";
 
-export const userService = {};
-userService.Profile = async (req, res, next) => {
-
-  let id = req.auth.id;
+export const Profile = async (req: Request) => {
+  let id = req.auth?.id;
 
   const User = await FindUserById(id);
   let email = User.email;
