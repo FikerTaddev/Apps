@@ -4,14 +4,14 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- enum 
 
-CREATE TYPE ROLE AS ENUM('admin','member','viewer')
+CREATE TYPE ROLE AS ENUM('admin','member','viewwer')
 
 -- USERS TABLE
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
-    role TEXT NOT NULL DEFAULT 'user',
+    role TEXT NOT NULL DEFAULT 'viewer',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
