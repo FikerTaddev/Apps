@@ -2,7 +2,7 @@
 CREATE EXTENSION
 IF NOT EXISTS "uuid-ossp";
     -- enum
-    CREATE TYPE ROLES AS ENUM('owner','member','viewer');
+    CREATE TYPE  ROLES AS ENUM('owner','member','viewer');
     -- USERS TABLE
     CREATE TABLE IF NOT EXISTS users
         (
@@ -11,16 +11,16 @@ IF NOT EXISTS "uuid-ossp";
             password TEXT NOT NULL       ,
             role ROLES DEFAULT 'viewer'  ,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    ;
+        );
     -- WORKSPACE TABLE
     CREATE TABLE workspaces
         (
-            id          SERIAL PRIMARY KEY     ,
-            name        VARCHAR NOT NULL UNIQUE,
-            description TEXT                   ,
-            owner_id    INT NOT NULL REFERENCES users(id) created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
+            id          SERIAL PRIMARY KEY               ,
+            name        VARCHAR NOT NULL UNIQUE          ,
+            description TEXT                             ,
+            owner_id    INT NOT NULL REFERENCES users(id),
+            created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
     -- WORKSPACE MEMEBERS
     CREATE TABLE workspace_members
         (
@@ -33,14 +33,13 @@ IF NOT EXISTS "uuid-ossp";
                 CASCADE                                        ,
                 role ROLES DEFAULT 'viewer'                    ,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
-                UNIQUE(workspace_id, user_id) )
+                UNIQUE(workspace_id, user_id) );
             -- Optional index for performance
             CREATE INDEX IF
             NOT EXISTS idx_users_email ON users
                 (
                     email
-                )
-            ;
+                );
             CREATE INDEX IF
             NOT EXISTS idx_wm_user_id ON workspace_members
                 (
