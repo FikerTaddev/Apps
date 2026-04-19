@@ -1,5 +1,5 @@
 
-import { CreateUser, FindUserByEmail, FindUserById } from "./user.repo.js";
+import { CreateUser, FindUserByEmail, FindUserById } from "../user/user.repo.js";
 import {
     InvalidCredentialError,
     InvalidEmailFormatError,
