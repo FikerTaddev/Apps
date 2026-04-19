@@ -4,7 +4,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- enum 
 
-CREATE TYPE ROLE AS ENUM('admin','member','viewer');
+CREATE TYPE ROLE AS ENUM('owner','member','viewer');
 
 -- USERS TABLE
 CREATE TABLE IF NOT EXISTS users (
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 
+
 
 -- -- Optional index for performance
 -- CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);

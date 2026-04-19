@@ -1,13 +1,22 @@
-export const Profile = async (req, res, next) => {
+import { FindUserById, FindUsersCreationDate } from "./user.repo.js";
 
-    let id = req.auth.id
-    let email = req.auth.email
+export const userService = {};
+userService.Profile = async (req, res, next) => {
 
-    const User = FindUserById(id)
-    if (User) {
-        return {
-            "id": id,
-            "email": email
-        }
-    }
-}
+  let id = req.auth.id;
+
+  const User = await FindUserById(id);
+  let email = User.email;
+  let role = User.role;
+  let created_at = User.created_at;
+
+  if (User) {
+    return {
+      id: id,
+      email: email,
+      role: role,
+      created_at: created_at,
+    };
+  }
+  return;
+};
