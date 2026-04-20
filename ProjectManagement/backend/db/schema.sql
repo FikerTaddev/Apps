@@ -18,7 +18,7 @@ IF NOT EXISTS "uuid-ossp";
             id          SERIAL PRIMARY KEY               ,
             name        VARCHAR NOT NULL UNIQUE          ,
             description TEXT                             ,
-            owner_id    INT NOT NULL REFERENCES users(id),
+            owner_id    INT NOT NULL DEFAULT 'owner' REFERENCES users(id),
             created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     -- WORKSPACE MEMEBERS

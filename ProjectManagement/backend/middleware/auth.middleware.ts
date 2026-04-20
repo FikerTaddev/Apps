@@ -1,7 +1,7 @@
 import { expressjwt as jwt } from "express-jwt";
 import type { Request, Response, NextFunction } from "express";
 import { env } from "../config/env.js";
-import type { role } from "../types/role.js";
+import type { role } from "../types/type.js";
 export const jwtMiddleware = jwt({
   secret: env.JWT_SECRET,
   algorithms: ["HS256"],

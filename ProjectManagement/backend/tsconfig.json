@@ -6,8 +6,11 @@
     "outDir": "dist",
     "rootDir": "./",
     "paths": {
-      "@config/db": ["./config/db.js"],
-      "@config/env": ["./config/env.js"]
+      "@config/*": ["./config/*.js"],
+      "@infra/*": ["./infra/*.js"],
+      "@workspaces/*": ["./modules/workspaces/*.js"],
+      "@error/*":["./error/*.js"],
+      "@type/*":["./types/*.js"]
     },
     "strict": true,
     "esModuleInterop": true,

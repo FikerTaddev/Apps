@@ -13,7 +13,7 @@ import { ValidateEmail } from "../../utils/utils.js";
 import { VerifyHash, HashPwd } from "../../infra/hash.js";
 import { GenerateToken } from "../../infra/jwt.js";
 import { wrapDbOp } from "../../infra/wrapper.js";
-import { role } from "../../types/role.js";
+import { role } from "../../types/type.js";
 
 export const RegisterUser = async (
   email: string,
