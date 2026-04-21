@@ -1,3 +1,5 @@
+import { extend } from "zod/mini";
+
 export class AppError extends Error {
   public readonly statusCode: number;
 
@@ -60,5 +62,10 @@ export class ProjectAlreadyExists extends AppError {
 export class ProjectDoesntExist extends AppError {
   constructor(message: string = "Project deosnt Exist") {
     super(message, 404);
+  }
+}
+export class UnauthorizedUser extends AppError {
+  constructor(message: string = "Unauthorized: User ID missing from token") {
+    super(message, 401);
   }
 }
