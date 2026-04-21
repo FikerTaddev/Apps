@@ -9,8 +9,10 @@
       "@config/*": ["./config/*.js"],
       "@infra/*": ["./infra/*.js"],
       "@workspaces/*": ["./modules/workspaces/*.js"],
-      "@error/*":["./error/*.js"],
-      "@type/*":["./types/*.js"]
+      "@user/*": ["./modules/user/*.js"],
+      "@auth/*": ["./modules/auth/*.js"],
+      "@error/*": ["./error/*.js"],
+      "@type/*": ["./types/*.js"]
     },
     "strict": true,
     "esModuleInterop": true,
