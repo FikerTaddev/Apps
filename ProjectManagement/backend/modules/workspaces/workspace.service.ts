@@ -1,6 +1,7 @@
 import {
   CreateWorkspace,
   DoesWorkspaceExist,
+  GetAllWorkspaces,
   GetWorkspace,
 } from "@workspaces/workspace.repo";
 import { WorkspaceAlreadyExists, WorkspaceDoesntExist } from "@error/app";
@@ -21,10 +22,16 @@ export const AddNewWorkspace = async (
   return workspace;
 };
 
-export const GetAworkspace = async (params: GetWorkspaceParams) => {
-  const workspace = await GetWorkspace(params);
+export const GetAworkspace = async (id:number) => {
+  
+  const workspace = await GetWorkspace(id);
   if (!workspace) {
     throw new WorkspaceDoesntExist();
   }
   return workspace;
 };
+
+export const GetAllUserWorkspaces = async  (id:number) =>{
+ const user_workspace = await GetAllWorkspaces(id);
+ return user_workspace;
+} 
