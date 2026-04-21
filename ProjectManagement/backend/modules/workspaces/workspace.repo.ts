@@ -36,12 +36,14 @@ export const DoesWorkspaceExist = async (name: string): Promise<Boolean> => {
   return res.rows[0].exists;
 };
 export const GetAllWorkspaces = async (userId: number) => {
-
+  // LOG THIS: If this says "Querying for: NaN" or "undefined", that's the bug.
+  console.log("Service received userId:", userId, "Type:", typeof userId);
 
   const res = await db.query(
     'SELECT * FROM workspaces WHERE owner_id = $1', 
     [userId]
   );
   
+  console.log("Database returned row count:", res.rowCount);
   return res.rows;
 };

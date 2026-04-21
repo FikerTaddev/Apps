@@ -5,7 +5,7 @@ import {
   GetWorkspace,
 } from "@workspaces/workspace.repo";
 import { WorkspaceAlreadyExists, WorkspaceDoesntExist } from "@error/app";
-import { GetWorkspaceParams } from "@type/type";
+
 
 export const AddNewWorkspace = async (
   name: string,

@@ -51,3 +51,14 @@ export class WorkspaceDoesntExist extends AppError {
     super(message, 404);
   }
 }
+export class ProjectAlreadyExists extends AppError {
+  constructor(message: string = "Project ALready Exists") {
+    super(message, 409);
+  }
+}
+
+export class ProjectDoesntExist extends AppError {
+  constructor(message: string = "Project deosnt Exist") {
+    super(message, 404);
+  }
+}

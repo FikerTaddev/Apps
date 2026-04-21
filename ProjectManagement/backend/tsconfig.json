@@ -9,6 +9,7 @@
       "@config/*": ["./config/*.js"],
       "@infra/*": ["./infra/*.js"],
       "@workspaces/*": ["./modules/workspaces/*.js"],
+      "@project/*":["./modules/projects/*.js"],
       "@user/*": ["./modules/user/*.js"],
       "@auth/*": ["./modules/auth/*.js"],
       "@error/*": ["./error/*.js"],

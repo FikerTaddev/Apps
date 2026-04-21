@@ -3,6 +3,7 @@ import { authRoutes } from "./modules/auth/auth.route.js";
 import { userRoutes } from "./modules/user/user.routes.js";
 import { errorHandler } from "./middleware/error.handle.js";
 import { workspaceRoutes } from "@workspaces/workspace.route";
+import { projectRoutes } from "@project/projects.route";
 
 export const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/auth/v1", authRoutes);
 app.use("/profile", userRoutes);
 app.use("/workspaces", workspaceRoutes);
+app.use("/workspaces",projectRoutes)
 
 //error middleware
 app.use(errorHandler);
