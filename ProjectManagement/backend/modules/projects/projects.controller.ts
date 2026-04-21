@@ -1,6 +1,7 @@
 import { Response, NextFunction } from "express";
 import { Request } from "express-jwt";
 import * as ProjectServices from "@project/projects.service";
+import { ProjectDoesntExist, UnauthorizedUser } from "@error/app";
 
 export const GetProjectController = async (
   req: Request,
@@ -15,10 +16,7 @@ export const GetProjectController = async (
       const userId = req.auth?.id;
 
       if (!userId) {
-        //TODO : remove this and add it to error handler
-        return res
-          .status(401)
-          .json({ error: "Unauthorized: User ID missing from token" });
+        throw new UnauthorizedUser();
       }
 
       const Projects = await ProjectServices.GetAllUserProjects(Number(userId));
@@ -28,8 +26,7 @@ export const GetProjectController = async (
     const Project = await ProjectServices.GetAProject(ProjectId);
 
     if (!Project) {
-       //TODO : remove this and add it to error handler
-      return res.status(404).json({ message: "Project not found" });
+      throw new ProjectDoesntExist();
     }
 
     res.status(200).json(Project);
@@ -49,7 +46,6 @@ export const CreateProjectController = async (
     const name = req.body.name;
     const desc = req.body.desc;
 
-
     const Project = await ProjectServices.AddNewProject(
       name,
       desc,
@@ -58,7 +54,6 @@ export const CreateProjectController = async (
     );
 
     res.status(201).json({ Project });
-
   } catch (e) {
     next(e);
   }

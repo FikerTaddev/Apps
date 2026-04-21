@@ -1,6 +1,7 @@
 import { Response, NextFunction } from "express";
 import { Request } from "express-jwt";
 import * as workspaceServices from "@workspaces/workspace.service";
+import { WorkspaceDoesntExist } from "@error/app";
 
 export const GetWorkspaceController = async (
   req: Request,
@@ -31,8 +32,7 @@ export const GetWorkspaceController = async (
     const workspace = await workspaceServices.GetAworkspace(workspaceId);
 
     if (!workspace) {
-      //TODO : remove this and add it to error handler
-      return res.status(404).json({ message: "Workspace not found" });
+      throw new WorkspaceDoesntExist
     }
 
     res.status(200).json(workspace);
