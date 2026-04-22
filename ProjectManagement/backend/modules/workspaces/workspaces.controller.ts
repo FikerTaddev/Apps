@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express";
 import { Request } from "express-jwt";
 import * as workspaceServices from "@workspaces/workspace.service";
-import { WorkspaceDoesntExist } from "@error/app";
+import { UnauthorizedUser, WorkspaceDoesntExist } from "@error/app";
 
 export const GetWorkspaceController = async (
   req: Request,
@@ -13,19 +13,15 @@ export const GetWorkspaceController = async (
 
     if (!idParam) {
       const userId = req.auth?.id;
-      console.log("Full Token Payload:", req.auth);
 
       if (!userId) {
-        //TODO : remove this and add it to error handler
-        return res
-          .status(401)
-          .json({ error: "Unauthorized: User ID missing from token" });
+        throw new UnauthorizedUser
       }
 
       const workspaces = await workspaceServices.GetAllUserWorkspaces(
         Number(userId),
       );
-      return res.status(200).json(workspaces);
+      return res.status(200).json([workspaces]);
     }
 
     const workspaceId = Number(idParam);
@@ -35,7 +31,7 @@ export const GetWorkspaceController = async (
       throw new WorkspaceDoesntExist
     }
 
-    res.status(200).json(workspace);
+    res.status(200).json({workspace});
   } catch (e) {
     next(e);
   }
