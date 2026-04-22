@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
-    "start": "nodemon --exec tsx server.js",
+    "start": "tsx server.js",
     "migrate" :"psql -U postgres -d appdb -f db/schema.sql"
   },
   "keywords": [],
