@@ -1,9 +1,10 @@
-import { ProjectAlreadyExists, ProjectDoesntExist } from "@error/app";
+import { ProjectAlreadyExists, ProjectDoesntExist, UnauthorizedAcess } from "@error/app";
 import {
   DoesProjectExist,
   CreateProject,
   GetProject,
   GetAllProjects,
+  CheckOwner
 } from "@project/projects.repo";
 
 export const AddNewProject = async (
@@ -12,7 +13,11 @@ export const AddNewProject = async (
   user_id: number,
   workspace_id:number
 ) => {
-  const existing = await DoesProjectExist(name);
+  const isOwner = await CheckOwner(user_id);
+  if (!isOwner) {
+    throw new  UnauthorizedAcess
+  }
+  const existing = await DoesProjectExist(name,user_id);
   if (!!existing) {
     throw new ProjectAlreadyExists();
   }

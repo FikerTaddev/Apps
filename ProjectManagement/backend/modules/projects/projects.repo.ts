@@ -26,23 +26,30 @@ export const GetProject = async (id: number) => {
   return res.rows[0];
 };
 
-export const DoesProjectExist = async (name: string): Promise<Boolean> => {
+export const DoesProjectExist = async (name: string,user_id:number): Promise<Boolean> => {
   let res = await db.query(
     `
-      SELECT EXISTS(SELECT 1 FROM projects WHERE name = $1)
+      SELECT EXISTS(SELECT 1 FROM projects WHERE name = $1 AND owner_id = $2)
         `,
-    [name],
+    [name,user_id],
   );
   return res.rows[0].exists;
 };
 export const GetAllProjects = async (userId: number) => {
-  // LOG THIS: If this says "Querying for: NaN" or "undefined", that's the bug.
-  console.log("Service received userId:", userId, "Type:", typeof userId);
+  
 
-  const res = await db.query("SELECT * FROM projects WHERE owner_id = $1", [
+  const res = await db.query(`SELECT * FROM projects WHERE owner_id = $1`, [
     userId,
   ]);
 
-  console.log("Database returned row count:", res.rowCount);
   return res.rows;
 };
+
+
+export const CheckOwner = async (userId : number) => {
+ const res = await db.query(`SELECT EXISTS(SELECT 1 FROM workspaces WHERE owner_id = $1)`, [
+    userId,
+  ]);
+
+  return res.rows[0].exists;
+}
