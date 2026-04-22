@@ -69,3 +69,8 @@ export class UnauthorizedUser extends AppError {
     super(message, 401);
   }
 }
+export class UnauthorizedAcess extends AppError {
+  constructor(message: string = "Unauthorized: Unauthorised Workspace") {
+    super(message, 401);
+  }
+}
