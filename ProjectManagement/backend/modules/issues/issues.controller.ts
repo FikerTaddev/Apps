@@ -3,7 +3,7 @@ import { Request } from "express-jwt";
 import * as IssuesServices from "@issues/issues.service";
 import { IssueDoesntExist, UnauthorizedUser } from "@error/app";
 
-export const GetIssuesController = async (
+export const GetAllIssuesController = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -28,7 +28,33 @@ export const GetIssuesController = async (
       throw new IssueDoesntExist();
     }
 
-    res.status(200).json(Issues);
+    res.status(200).json({Issues});
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const GetAnIssuesController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const IssueId = Number(req.params.issuesId);
+
+    if (!IssueId) {
+      const userId = req.auth?.id;
+
+      if (!userId) {
+        throw new UnauthorizedUser();
+      }
+      const Issue = await IssuesServices.GetAnissue(Number(IssueId));
+
+      if (!Issue) {
+        throw new IssueDoesntExist();
+      }
+      return res.status(200).json({Issue});
+    }
   } catch (e) {
     next(e);
   }
@@ -46,7 +72,12 @@ export const CreateIssuesController = async (
     const title = req.body.title;
     const description = req.body.description;
 
-    const Issues = await IssuesServices.AddNewissue(title, description, UserId,ProjectId);
+    const Issues = await IssuesServices.AddNewissue(
+      title,
+      description,
+      UserId,
+      ProjectId,
+    );
 
     res.status(201).json({ Issues });
   } catch (e) {

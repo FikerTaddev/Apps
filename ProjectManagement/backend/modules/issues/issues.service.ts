@@ -1,7 +1,7 @@
 import { UnauthorizedAcess, IssueDoesntExist } from "@error/app";
 import { CreateIssue, GetIssue, GetAllIssues } from "@issues/issues.repo";
 import { GetProject, GetProjectByowner } from "@project/projects.repo";
-import { isatty } from "node:tty";
+
 
 export const AddNewissue = async (
   title: string,
@@ -32,10 +32,4 @@ export const GetAllUserissues = async (id: number) => {
   return user_issue;
 };
 
-export const IsUserAllowed = async (userId: number, worksapceId: number) => {
-    const isAllowed = await (await GetProjectByowner(userId)).workspace_id;
-    if (!isAllowed) {
-        
-    }
-    
-};
+

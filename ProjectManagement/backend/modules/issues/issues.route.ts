@@ -1,15 +1,24 @@
 import { Router } from "express";
 import { jwtMiddleware } from "../../middleware/auth.middleware.js";
-import { GetIssuesController ,CreateIssuesController} from "./issues.controller.js";
+import {
+  GetAllIssuesController,
+  CreateIssuesController,
+  GetAnIssuesController,
+} from "./issues.controller.js";
+
 export const IssuesRoutes: Router = Router();
 
 // GET all issues
-IssuesRoutes.get("/:projectId/issues", jwtMiddleware);
+IssuesRoutes.get("/:projectId/issues", jwtMiddleware, GetAllIssuesController);
 
 // GET single Issues
-IssuesRoutes.get("/:projectId/issues/:issuesId", jwtMiddleware, GetIssuesController);
+IssuesRoutes.get(
+  "/:projectId/issues/:issuesId",
+  jwtMiddleware,
+  GetAnIssuesController,
+);
 
 // CREATE Issues
-IssuesRoutes.post("/:projectId/issues", jwtMiddleware,CreateIssuesController);
+IssuesRoutes.post("/:projectId/issues", jwtMiddleware, CreateIssuesController);
 // UPDATE Issues
 IssuesRoutes.put("/:projectId/issues", jwtMiddleware);
