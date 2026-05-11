@@ -7,4 +7,5 @@ export const env :any = z.object({
     PORT: z.string().default('3200'),
     JWT_SECRET: z.string().default('secret'),
     DB_HOST: z.string().default('')
-}).parse(process.env)
+}).parse(process.env);
+

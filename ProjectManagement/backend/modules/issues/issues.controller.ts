@@ -34,31 +34,7 @@ export const GetAllIssuesController = async (
   }
 };
 
-export const GetAnIssuesController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const IssueId = Number(req.params.issuesId);
 
-    if (!IssueId) {
-      const userId = req.auth?.id;
-
-      if (!userId) {
-        throw new UnauthorizedUser();
-      }
-      const Issue = await IssuesServices.GetAnissue(Number(IssueId));
-
-      if (!Issue) {
-        throw new IssueDoesntExist();
-      }
-      return res.status(200).json({Issue});
-    }
-  } catch (e) {
-    next(e);
-  }
-};
 
 export const CreateIssuesController = async (
   req: Request,
@@ -80,6 +56,60 @@ export const CreateIssuesController = async (
     );
 
     res.status(201).json({ Issues });
+  } catch (e) {
+    next(e);
+  }
+};
+export const GetAnIssuesController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const IssueId = Number(req.params.issuesId);
+ 
+    if (IssueId) {
+      const userId = req.auth?.id;
+ 
+      if (!userId) {
+        throw new UnauthorizedUser();
+      }
+      const Issue = await IssuesServices.GetAnissue(Number(IssueId));
+
+      if (!Issue) {
+        throw new IssueDoesntExist();
+      }
+      
+      return res.status(200).json({Issue});
+    } 
+    
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const UpdateIssuesController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    console.log("route hit")
+    const ProjectId = Number(req.params.projectId);
+    const UserId = Number(req.auth?.id);
+    const title = req.body.title;
+    const description = req.body.description;
+    const Status = req.body.status;
+
+    const Issues = await IssuesServices.Updateissue(
+      title,
+      description,
+      UserId,
+      ProjectId,
+      Status
+    );
+
+    res.status(200).json({ Issues });
   } catch (e) {
     next(e);
   }

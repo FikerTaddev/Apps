@@ -19,12 +19,23 @@ export const CreateProject = async (
 export const GetProject = async (id: number) => {
   let res = await db.query(
     `
-       SELECT * FROM projects WHERE id = $1
+       SELECT * FROM projects WHERE owner_id = $1
         `,
     [id],
   );
   return res.rows[0];
 };
+export const GetProjectByowner = async (id: number) => {
+  let res = await db.query(
+    `
+       SELECT * FROM projects WHERE owner_id = $1
+        `,
+    [id],
+  );
+  return res.rows[0];
+};
+
+
 
 export const DoesProjectExist = async (name: string,user_id:number): Promise<Boolean> => {
   let res = await db.query(

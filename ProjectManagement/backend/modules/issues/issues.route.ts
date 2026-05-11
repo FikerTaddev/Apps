@@ -4,6 +4,7 @@ import {
   GetAllIssuesController,
   CreateIssuesController,
   GetAnIssuesController,
+  UpdateIssuesController
 } from "./issues.controller.js";
 
 export const IssuesRoutes: Router = Router();
@@ -21,4 +22,4 @@ IssuesRoutes.get(
 // CREATE Issues
 IssuesRoutes.post("/:projectId/issues", jwtMiddleware, CreateIssuesController);
 // UPDATE Issues
-IssuesRoutes.put("/:projectId/issues", jwtMiddleware);
+IssuesRoutes.patch("/:projectId/issues", jwtMiddleware,UpdateIssuesController);

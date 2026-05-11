@@ -14,6 +14,7 @@ IF NOT EXISTS "uuid-ossp";
                     typname = 'roles')
         THEN
             CREATE TYPE ROLES AS ENUM('owner', 'member', 'viewer');
+            CREATE TYPE STATUSES AS ENUM('todo', 'in_progress', 'done');
         END
         IF;
         END $$;
@@ -63,6 +64,21 @@ IF NOT EXISTS "uuid-ossp";
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     -- This ensures uniqueness per workspace
                     UNIQUE(workspace_id, name) );
+        -- ISSUES TABLE
+        CREATE TABLE IF NOT EXISTS issues
+            (
+                id          SERIAL PRIMARY KEY,
+                title       TEXT NOT NULL     , -- Removed UNIQUE here
+                description TEXT              ,
+                status STATUSES DEFAULT 'todo',
+                project_id INT NOT NULL REFERENCES projects(id) ON
+                DELETE
+                    CASCADE                                       ,
+                    reporter_id INT REFERENCES users(id)          ,
+                    assignee_id INT                               ,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    -- This ensures uniqueness per workspace
+                    UNIQUE(project_id, title) );
         -- Indices
         CREATE INDEX IF
         NOT EXISTS idx_users_email ON users
@@ -81,4 +97,16 @@ IF NOT EXISTS "uuid-ossp";
         NOT EXISTS idx_projects_workspace_id ON projects
             (
                 workspace_id
+            )
+        ;
+        CREATE INDEX IF
+        NOT EXISTS idx_projects_workspace_id ON projects
+            (
+                workspace_id
+            )
+        ;
+        CREATE INDEX IF
+        NOT EXISTS idx_issues_assignee_id ON issues
+            (
+                assignee_id
             );

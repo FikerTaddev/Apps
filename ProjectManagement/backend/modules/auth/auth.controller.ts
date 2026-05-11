@@ -7,6 +7,7 @@ export const SignUp = async (
 ) => {
   try {
     const { email, password } = req.body;
+  
     const token = await authService.RegisterUser(email, password);
     res.status(201).json({ token });
   } catch (err) {

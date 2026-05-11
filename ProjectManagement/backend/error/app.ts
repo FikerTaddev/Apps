@@ -74,3 +74,13 @@ export class UnauthorizedAcess extends AppError {
     super(message, 401);
   }
 }
+export class UnauthorizedProjectAcess extends AppError {
+  constructor(message: string = "Unauthorized: Unauthorised Project") {
+    super(message, 401);
+  }
+}
+export class IssueDoesntExist extends AppError {
+  constructor(message: string = "Issue deosnt Exist") {
+    super(message, 404);
+  }
+}
