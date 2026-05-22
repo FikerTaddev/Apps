@@ -1,0 +1,1 @@
+export type role = "owner" | "viewer" | "member"
